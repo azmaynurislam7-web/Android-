@@ -134,9 +134,10 @@ class MainActivity : Activity() {
 
         scroll.addView(content)
 
+        // Yahan width ko -1 (MATCH_PARENT) kar diya gaya hai taaki saare buttons screen par dikhein
         root.addView(
             scroll,
-            LinearLayout.LayoutParams(0, 0, 1f)
+            LinearLayout.LayoutParams(-1, 0, 1f)
         )
 
         progress = ProgressBar(this, null,
