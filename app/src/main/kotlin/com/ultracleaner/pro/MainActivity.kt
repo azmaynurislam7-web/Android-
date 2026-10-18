@@ -1,6 +1,7 @@
 package com.ultracleaner.pro
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Environment
 import android.os.StatFs
