@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
     val photoFile = File(directory, "Snapshot_${System.currentTimeMillis()}.jpg")
     
     val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-...
+
 
         imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
             override fun onError(exc: ImageCaptureException) {}
