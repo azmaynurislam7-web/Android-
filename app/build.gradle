@@ -1,17 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
 }
 
 android {
     namespace 'com.hd.camerapro'
-    compileSdk 34  // <-- 33 se badal kar 34 kiya
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.hd.camerapro"
         minSdk 24
-        targetSdk 34  // <-- 33 se badal kar 34 kiya
+        targetSdk 34
         versionCode 1
         versionName "1.0"
     }
@@ -35,7 +34,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
 
-    // Firebase
+    // Firebase BoM & KTX
     implementation platform('com.google.firebase:firebase-bom:32.2.0')
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
