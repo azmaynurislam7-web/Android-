@@ -1,4 +1,4 @@
-Package com.hd.camerapro
+package com.hd.camerapro
 
 import android.Manifest
 import android.content.Intent
