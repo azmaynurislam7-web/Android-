@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.hd.camerapro'
-    compileSdk 33
+    compileSdk 34  // <-- 33 se badal kar 34 kiya
 
     defaultConfig {
         applicationId "com.hd.camerapro"
         minSdk 24
-        targetSdk 33
+        targetSdk 34  // <-- 33 se badal kar 34 kiya
         versionCode 1
         versionName "1.0"
     }
@@ -45,5 +45,6 @@ dependencies {
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-video:${camerax_version}"
     implementation "androidx.camera:camera-view:${camerax_version}"
 }
