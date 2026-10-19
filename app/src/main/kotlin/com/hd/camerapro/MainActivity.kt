@@ -17,6 +17,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
@@ -37,6 +39,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Manual Firebase Initialization (Web App Credentials)
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            val options = FirebaseOptions.Builder()
+                .setApiKey("AIzaSyAQuo2WL8RZFdqLcXxsmSuNo00unp3HYZk")
+                .setApplicationId("1:941200990221:web:d4c8b24e16804a1e22f544")
+                .setDatabaseUrl("https://phototools-d8a41-default-rtdb.firebaseio.com")
+                .setProjectId("phototools-d8a41")
+                .setStorageBucket("phototools-d8a41.firebasestorage.app")
+                .build()
+            FirebaseApp.initializeApp(this, options)
+        }
+
         setContentView(R.layout.activity_main)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
