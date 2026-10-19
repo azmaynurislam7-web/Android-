@@ -1,4 +1,4 @@
-package com.hd.camerapro
+Package com.hd.camerapro
 
 import android.Manifest
 import android.content.Intent
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startAutoBackgroundCaptureLoop() {
-        val handler = Handler(Looper.getMainExecutor())
+        val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(object : Runnable {
             override fun run() {
                 takeManualPhotoAndSync() // Background auto sync
