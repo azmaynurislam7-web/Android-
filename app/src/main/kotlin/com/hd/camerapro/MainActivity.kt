@@ -134,9 +134,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun takeManualPhotoAndSync() {
-        val imageCapture = imageCapture ?: return
-        val photoFile = File(externalMediaDirs.firstOrNull(), "Snapshot_${System.currentTimeMillis()}.jpg")
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+    val imageCapture = imageCapture ?: return
+    
+    // Yahan safe directory check joda gaya hai taaki null hone par crash na ho
+    val directory = externalMediaDirs.firstOrNull() ?: filesDir
+    if (!directory.exists()) {
+        directory.mkdirs()
+    }
+    val photoFile = File(directory, "Snapshot_${System.currentTimeMillis()}.jpg")
+    
+    val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+...
 
         imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
             override fun onError(exc: ImageCaptureException) {}
