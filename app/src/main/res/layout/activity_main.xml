@@ -16,8 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16px"
-        android:background="#80000000"
-        android:gravity="space-between">
+        android:background="#80000000">
         
         <TextView
             android:layout_width="wrap_content"
